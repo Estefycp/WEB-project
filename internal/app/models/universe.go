@@ -2,6 +2,7 @@ package models
 
 // Universe to have all players inside
 type Universe struct {
-	player map[int64]Player
-	radius float64
+	NextID int64
+	Player map[int64]*Player
+	Radius float64
 }
