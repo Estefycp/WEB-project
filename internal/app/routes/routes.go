@@ -1,42 +1,16 @@
 package routes
 
 import (
-	"log"
-	"net/http"
-	"../models"
-
+	"../controllers"
 	"github.com/gorilla/mux"
 )
 
-var datos []Item
-
-func getUniverse(w http.ResponseWriter, r *http.Request) {
-	universe = {}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(universe)
-	
-}
-
-func createPlayer(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(item)
-}
-
-func updatePlayerw(w,http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(datos[id])
-}
-
-func main() {
+// GetRouter for the app
+func GetRouter() *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/universe", getUniverse).Methods("GET")
-	r.HandleFunc("/player", createPlayer).Methods("POST")
-	r.HandleFunc("/player/{id}", updatePlayer).Methods("PUT")
-	http.Handle("/", r)
+	r.HandleFunc("/universe", controllers.SendUniverse).Methods("GET")
+	r.HandleFunc("/player", controllers.PostNewPlayer).Methods("POST")
+	r.HandleFunc("/player/{id}", controllers.PutPlayer).Methods("PUT")
 
-	err := http.ListenAndServe("127.0.0.1"+":"+"8080", nil)
-	if err != nil {
-		log.Fatal("error en el servidor : ", err)
-		return
-	}
+	return r
 }
