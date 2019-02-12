@@ -1,19 +1,19 @@
 package main
 
 import (
-	"log"
 	"net/http"
 
 	"../../internal/app/routes"
+	"github.com/rs/cors"
 )
 
 func main() {
 	r := routes.GetRouter()
 	http.Handle("/", r)
 
-	err := http.ListenAndServe("127.0.0.1"+":"+"8080", nil)
-	if err != nil {
-		log.Fatal("error en el servidor : ", err)
-		return
-	}
+	// cors.Default() setup the middleware with default options being
+	// all origins accepted with simple methods (GET, POST). See
+	// documentation below for more options.
+	handler := cors.Default().Handler(r)
+	http.ListenAndServe(":8081", handler)
 }
