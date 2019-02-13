@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"math"
 	"net/http"
 	"strconv"
@@ -37,14 +38,54 @@ func PostNewPlayer(w http.ResponseWriter, r *http.Request) {
 func PutPlayer(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	r.ParseForm()
+	a := []string{}
+	b := []string{"up", "down", "left", "right"}
 
-	universe := GetUniverse()
-	intid, _ := strconv.Atoi(vars["id"])
-	id := int64(intid)
+	for key := range r.Form {
+		a = append(a, key)
+	}
+
+	visto := false
+	for i := range b {
+		if visto {
+			visto = false
+		}
+
+		for j := range a {
+			if b[i] == a[j] {
+				fmt.Printf("%s ,%s\n", a[i], b[j])
+				visto = true
+			}
+		}
+	}
+
+	if visto == false {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("400 - Missing parameters"))
+		return
+	}
+
+	fmt.Printf("noo")
 	up, _ := strconv.ParseBool(r.Form["up"][0])
 	down, _ := strconv.ParseBool(r.Form["down"][0])
 	left, _ := strconv.ParseBool(r.Form["left"][0])
 	right, _ := strconv.ParseBool(r.Form["right"][0])
+
+	/*if up == nil || r.Form["down"][0] == nil || r.Form["left"][0] == nil || r.Form["right"][0] == nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("400 - Missing parameters"))
+		return
+	}*/
+	universe := GetUniverse()
+	intid, _ := strconv.Atoi(vars["id"])
+	id := int64(intid)
+
+	if universe.Player[id] == nil {
+
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte("404 - No player Found"))
+		return
+	}
 
 	player := UpdateUniverse(universe, id, up, down, left, right)
 	w.Header().Set("Content-Type", "application/json")
