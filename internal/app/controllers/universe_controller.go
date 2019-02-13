@@ -13,7 +13,7 @@ import (
 var globalUniverse models.Universe = models.Universe{
 	NextID: 0,
 	Player: map[int64]*models.Player{},
-	Radius: 100.0,
+	Radius: 300.0,
 }
 
 // SendUniverse to the client

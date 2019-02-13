@@ -33,9 +33,6 @@ func main() {
 	// 	),
 	// )(r)
 
-	// cors.Default() setup the middleware with default options being
-	// all origins accepted with simple methods (GET, POST). See
-	// documentation below for more options.
 	handler := cors.New(cors.Options{
 		AllowedMethods: []string{"GET", "POST", "PUT"},
 	}).Handler(r)
