@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"math"
 	"net/http"
 	"strconv"
 
@@ -81,8 +82,11 @@ func UpdateUniverse(universe *models.Universe, id int64, up, down, left, right b
 		deltaX -= 1.0
 	}
 	player := universe.Player[id]
-	MovePlayer(player, deltaX, deltaY)
-	UpdateRadius(player, deltaR)
+	centerDist := math.Sqrt(math.Pow(player.X+deltaX, 2.0) + math.Pow(player.Y+deltaY, 2.0))
+	if centerDist < universe.Radius {
+		MovePlayer(player, deltaX, deltaY)
+		UpdateRadius(player, deltaR)
+	}
 	CheckAllCollisions(universe, player)
 	return player
 }
