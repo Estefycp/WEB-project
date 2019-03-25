@@ -3,6 +3,7 @@ package controllers
 import (
 	"math"
 	"math/rand"
+	"time"
 
 	"../models"
 )
@@ -21,12 +22,13 @@ func CreatePlayer(name string, universe *models.Universe) models.Player {
 	initialScore = 100
 
 	return models.Player{
-		ID:     universe.NextID,
-		Name:   name,
-		Score:  initialScore,
-		Radius: initialRadius,
-		X:      initalX,
-		Y:      initalY,
+		ID:       universe.NextID,
+		Name:     name,
+		Score:    initialScore,
+		Radius:   initialRadius,
+		X:        initalX,
+		Y:        initalY,
+		LastMove: time.Now(),
 	}
 }
 

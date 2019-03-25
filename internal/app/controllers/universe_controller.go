@@ -5,6 +5,7 @@ import (
 	"math"
 	"net/http"
 	"strconv"
+	"time"
 
 	"../models"
 	"github.com/gorilla/mux"
@@ -86,6 +87,7 @@ func UpdateUniverse(universe *models.Universe, id int64, up, down, left, right b
 	if centerDist < universe.Radius {
 		MovePlayer(player, deltaX, deltaY)
 		UpdateRadius(player, deltaR)
+		player.LastMove = time.Now()
 	}
 	CheckAllCollisions(universe, player)
 	return player
@@ -110,6 +112,17 @@ func CheckAllCollisions(universe *models.Universe, player *models.Player) {
 		if CheckCollision(p1, player) {
 			DeletePlayer(universe, p1)
 			DeletePlayer(universe, player)
+		}
+	}
+}
+
+// DeleteInactive players
+func DeleteInactive(universe *models.Universe) {
+	minutesToInactive := 2.0
+	t := time.Now()
+	for k, p := range universe.Player {
+		if t.Sub(p.LastMove).Minutes() < minutesToInactive {
+			delete(universe.Player, k)
 		}
 	}
 }
