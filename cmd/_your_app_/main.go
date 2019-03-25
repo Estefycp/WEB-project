@@ -4,10 +4,13 @@ import (
 	"net/http"
 
 	"../../internal/app/routes"
+	"../../internal/app/routines"
 	"github.com/rs/cors"
 )
 
 func main() {
+	routines.StartRoutines()
+
 	r := routes.GetRouter()
 	http.Handle("/", r)
 
