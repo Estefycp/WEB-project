@@ -126,3 +126,8 @@ func DeleteInactive(universe *models.Universe) {
 		}
 	}
 }
+
+// DeleteInactiveRoutine
+func DeleteInactiveRoutine() {
+	DeleteInactive(GetUniverse())
+}
