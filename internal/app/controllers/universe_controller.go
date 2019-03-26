@@ -118,10 +118,10 @@ func CheckAllCollisions(universe *models.Universe, player *models.Player) {
 
 // DeleteInactive players
 func DeleteInactive(universe *models.Universe) {
-	minutesToInactive := 2.0
+	minutesToInactive := 1.0
 	t := time.Now()
 	for k, p := range universe.Player {
-		if t.Sub(p.LastMove).Minutes() < minutesToInactive {
+		if t.Sub(p.LastMove).Minutes() > minutesToInactive {
 			delete(universe.Player, k)
 		}
 	}
