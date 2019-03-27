@@ -11,6 +11,7 @@ func GetRouter() *mux.Router {
 	r.HandleFunc("/universe", controllers.SendUniverse).Methods("GET")
 	r.HandleFunc("/player", controllers.PostNewPlayer).Methods("POST")
 	r.HandleFunc("/player/{id}", controllers.PutPlayer).Methods("PUT")
+	r.HandleFunc("/stats", controllers.GetStats).Methods("GET")
 
 	return r
 }
