@@ -29,7 +29,7 @@ func SendUniverse(w http.ResponseWriter, r *http.Request) {
 func PostNewPlayer(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	universe := GetUniverse()
-	player := CreateAndAddPlayer(universe, r.Form["name"][0])
+	player := CreateAndAddPlayer(universe, r.Form["name"][0], r.Form["skin"][0])
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(player)
 }
@@ -58,8 +58,12 @@ func GetUniverse() *models.Universe {
 }
 
 // CreateAndAddPlayer to universe
-func CreateAndAddPlayer(universe *models.Universe, name string) *models.Player {
-	player := CreatePlayer(name, universe)
+func CreateAndAddPlayer(universe *models.Universe, name string, skin string) *models.Player {
+	skinn, err := strconv.ParseInt(skin, 10, 64)
+	if err != nil {
+		panic(err)
+	}
+	player := CreatePlayer(name, skinn, universe)
 	universe.NextID++
 	AddPlayer(universe, &player)
 	return &player

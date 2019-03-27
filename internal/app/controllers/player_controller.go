@@ -9,7 +9,7 @@ import (
 )
 
 // CreatePlayer for the game
-func CreatePlayer(name string, universe *models.Universe) models.Player {
+func CreatePlayer(name string, skin int64, universe *models.Universe) models.Player {
 	initialRadius := 1.0
 
 	randR := rand.Float64() * universe.Radius
@@ -29,6 +29,7 @@ func CreatePlayer(name string, universe *models.Universe) models.Player {
 		X:        initalX,
 		Y:        initalY,
 		LastMove: time.Now(),
+		Skin:     skin,
 	}
 }
 

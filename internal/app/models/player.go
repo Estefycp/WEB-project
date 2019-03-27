@@ -11,4 +11,5 @@ type Player struct {
 	X        float64   `json:"x"`
 	Y        float64   `json:"y"`
 	LastMove time.Time `json:"lastmove"`
+	Skin     int64     `json:"skin"`
 }
