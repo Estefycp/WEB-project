@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"strconv"
 	"time"
 
 	"../models"
@@ -23,9 +24,29 @@ func (r *redisStore) SaveScore(player *models.Player) error {
 }
 
 func (r *redisStore) GetScores() ([]float64, error) {
-	return nil, nil
+	strs, err := r.client.LRange("scores", 0, -1).Result()
+	if err != nil {
+		return nil, err
+	}
+	var scores []float64
+	for _, score := range strs {
+		if n, err := strconv.ParseFloat(score, 64); err == nil {
+			scores = append(scores, n)
+		}
+	}
+	return scores, nil
 }
 
 func (r *redisStore) GetAliveDurations() ([]time.Duration, error) {
-	return nil, nil
+	strs, err := r.client.LRange("alive", 0, -1).Result()
+	if err != nil {
+		return nil, err
+	}
+	var durs []time.Duration
+	for _, dur := range strs {
+		if n, err := time.ParseDuration(dur); err == nil {
+			durs = append(durs, n)
+		}
+	}
+	return durs, nil
 }
