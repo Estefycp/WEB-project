@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"../models"
+	"../storage"
 	"github.com/gorilla/mux"
 )
 
@@ -100,6 +101,7 @@ func AddPlayer(universe *models.Universe, player *models.Player) {
 
 // DeletePlayer from the game
 func DeletePlayer(universe *models.Universe, player *models.Player) {
+	storage.GetInstance().SaveScore(player)
 	delete(universe.Player, player.ID)
 }
 
@@ -120,14 +122,14 @@ func CheckAllCollisions(universe *models.Universe, player *models.Player) {
 func DeleteInactive(universe *models.Universe) {
 	minutesToInactive := 1.0
 	t := time.Now()
-	for k, p := range universe.Player {
+	for _, p := range universe.Player {
 		if t.Sub(p.LastMove).Minutes() > minutesToInactive {
-			delete(universe.Player, k)
+			DeletePlayer(universe, p)
 		}
 	}
 }
 
-// DeleteInactiveRoutine
+// DeleteInactiveRoutine on the singleton universe
 func DeleteInactiveRoutine() {
 	DeleteInactive(GetUniverse())
 }

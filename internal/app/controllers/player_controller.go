@@ -29,6 +29,7 @@ func CreatePlayer(name string, universe *models.Universe) models.Player {
 		X:        initalX,
 		Y:        initalY,
 		LastMove: time.Now(),
+		Born:     time.Now(),
 	}
 }
 

@@ -11,8 +11,15 @@ type redisStore struct {
 	client *redis.Client
 }
 
-func (r *redisStore) SaveScore(player models.Player) error {
-	return nil
+func (r *redisStore) SaveScore(player *models.Player) error {
+	err := r.client.RPush("scores", player.Radius).Err()
+	if err != nil {
+		return err
+	}
+	t := time.Now()
+	t.Sub(player.Born)
+	err = r.client.RPush("alive", t.Sub(player.Born).String()).Err()
+	return err
 }
 
 func (r *redisStore) GetScores() ([]float64, error) {
