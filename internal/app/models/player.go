@@ -12,4 +12,5 @@ type Player struct {
 	Y        float64   `json:"y"`
 	LastMove time.Time `json:"lastmove"`
 	Born     time.Time `json:"born"`
+	Skin     int64     `json:"skin"`
 }
