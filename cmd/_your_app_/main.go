@@ -5,10 +5,12 @@ import (
 
 	"../../internal/app/routes"
 	"../../internal/app/routines"
+	"../../internal/app/storage"
 	"github.com/rs/cors"
 )
 
 func main() {
+	storage.GetInstance()
 	routines.StartRoutines()
 
 	r := routes.GetRouter()
