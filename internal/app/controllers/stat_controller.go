@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Estefycp../storage"
-	"github.com/Estefycp/models"
+	"github.com/Estefycp/WEB-project/internal/app/models"
+	"github.com/Estefycp/WEB-project/internal/app/storage"
 )
 
 // GetStats from the game

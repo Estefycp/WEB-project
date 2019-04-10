@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Estefycp/models"
-	"github.com/Estefycp/storage"
+	"github.com/Estefycp/WEB-project/internal/app/models"
+	"github.com/Estefycp/WEB-project/internal/app/storage"
 	"github.com/gorilla/mux"
 )
 

@@ -1,10 +1,11 @@
 package storage
 
 import (
+	"os"
 	"sync"
 	"time"
 
-	"github.com/Estefycp/models"
+	"github.com/Estefycp/WEB-project/app/models"
 	"github.com/go-redis/redis"
 )
 
@@ -22,9 +23,9 @@ var once sync.Once
 func GetInstance() Store {
 	once.Do(func() {
 		client := redis.NewClient(&redis.Options{
-			Addr:     "localhost:6379",
-			Password: "", // no password set
-			DB:       0,  // use default DB
+			Addr:     os.Getenv("REDIS_ADDRESS"),
+			Password: os.Getenv("REDIS_PASSWORD"), // no password set
+			DB:       0,                           // use default DB
 		})
 		instance = &redisStore{client}
 	})

@@ -3,9 +3,9 @@ package main
 import (
 	"net/http"
 
-	"github.com/Estefycp/internal/app/routes"
-	"github.com/Estefycp/internal/app/routines"
-	"github.com/Estefycp/internal/app/storage"
+	"github.com/Estefycp/WEB-project/internal/app/routes"
+	"github.com/Estefycp/WEB-project/internal/app/routines"
+	"github.com/Estefycp/WEB-project/internal/app/storage"
 	"github.com/rs/cors"
 )
 
