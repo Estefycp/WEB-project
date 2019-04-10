@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Estefycp/WEB-project/app/models"
+	"github.com/Estefycp/WEB-project/internal/app/models"
 	"github.com/go-redis/redis"
 )
 
