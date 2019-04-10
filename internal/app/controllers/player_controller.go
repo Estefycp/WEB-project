@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"time"
 
-	"../models"
+	"github.com/Estefycp/models"
 )
 
 // CreatePlayer for the game

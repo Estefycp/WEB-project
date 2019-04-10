@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"../controllers"
+	"github.com/Estefycp/controllers"
 	"github.com/gorilla/mux"
 )
 
