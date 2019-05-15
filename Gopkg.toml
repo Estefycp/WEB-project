@@ -36,3 +36,9 @@
 [prune]
   go-tests = true
   unused-packages = true
+
+[metadata.heroku]
+  root-package = "github.com/Estefycp/WEB-project"
+  go-version = "1.11"
+  install = [ "./cmd/..." ]
+  ensure = true
