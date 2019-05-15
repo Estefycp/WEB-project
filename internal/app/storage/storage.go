@@ -22,9 +22,9 @@ var once sync.Once
 func GetInstance() Store {
 	once.Do(func() {
 		client := redis.NewClient(&redis.Options{
-			Addr:     "localhost:6379",
-			Password: "", // no password set
-			DB:       0,  // use default DB
+			Addr:     "redis-12469.c8.us-east-1-3.ec2.cloud.redislabs.com:12469",
+			Password: "hgjRPzluHmlNdyGzRPkSXipRumGFMG64", // no password set
+			DB:       0,                                  // use default DB
 		})
 		instance = &redisStore{client}
 	})
