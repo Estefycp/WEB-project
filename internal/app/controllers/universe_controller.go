@@ -48,7 +48,8 @@ func PutPlayer(w http.ResponseWriter, r *http.Request) {
 	left, _ := strconv.ParseBool(r.Form["left"][0])
 	right, _ := strconv.ParseBool(r.Form["right"][0])
 
-	player := UpdateUniverse(universe, id, up, down, left, right)
+	// player := UpdateUniverse(universe, id, up, down, left, right)
+	player := UpdateChargeUniverse(universe, id, up, down, left, right)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(player)
 }
@@ -72,6 +73,7 @@ func CreateAndAddPlayer(universe *models.Universe, name string, skin string) *mo
 
 // UpdateUniverse with a player action
 func UpdateUniverse(universe *models.Universe, id int64, up, down, left, right bool) *models.Player {
+	player := universe.Player[id]
 	deltaR := 0.001
 	deltaX := 0.0
 	deltaY := 0.0
@@ -87,7 +89,6 @@ func UpdateUniverse(universe *models.Universe, id int64, up, down, left, right b
 	if left {
 		deltaX -= 0.5
 	}
-	player := universe.Player[id]
 	centerDist := math.Sqrt(math.Pow(player.X+deltaX, 2.0) + math.Pow(player.Y+deltaY, 2.0))
 	if centerDist < universe.Radius {
 		MovePlayer(player, deltaX, deltaY)
@@ -136,4 +137,53 @@ func DeleteInactive(universe *models.Universe) {
 // DeleteInactiveRoutine on the singleton universe
 func DeleteInactiveRoutine() {
 	DeleteInactive(GetUniverse())
+}
+
+// UpdateChargeUniverse for a player
+func UpdateChargeUniverse(universe *models.Universe, id int64, up, down, left, right bool) *models.Player {
+	player := universe.Player[id]
+	deltaR := 0.001
+	if up {
+		player.UpCharge++
+	} else if player.UpCharge > 0 {
+		player.Vy = (float64(player.UpCharge) / 5.0)
+		player.UpCharge = 0
+	}
+	if down {
+		player.DownCharge++
+	} else if player.DownCharge > 0 {
+		player.Vy = -(float64(player.DownCharge) / 5.0)
+		player.DownCharge = 0
+	}
+	if right {
+		player.RightCharge++
+	} else if player.RightCharge > 0 {
+		player.Vx = (float64(player.RightCharge) / 5.0)
+		player.RightCharge = 0
+	}
+	if left {
+		player.LeftCharge++
+	} else if player.LeftCharge > 0 {
+		player.Vx = -(float64(player.LeftCharge) / 5.0)
+		player.LeftCharge = 0
+	}
+	UpdateRadius(player, deltaR)
+	player.LastMove = time.Now()
+	return player
+}
+
+// MoveAll players
+func MoveAll(universe *models.Universe) {
+	for _, player := range universe.Player {
+		centerDist := math.Sqrt(math.Pow(player.X+player.Vx, 2.0) + math.Pow(player.Y+player.Vy, 2.0))
+		if centerDist < universe.Radius {
+			LaunchPlayer(player)
+			CheckAllCollisions(universe, player)
+		}
+	}
+}
+
+// MoveAllRoutine on the singleton universe
+func MoveAllRoutine() {
+	MoveAll(GetUniverse())
 }

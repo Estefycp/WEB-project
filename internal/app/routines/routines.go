@@ -27,4 +27,5 @@ func schedule(what func(), delay time.Duration) chan bool {
 // StartRoutines for the server
 func StartRoutines() {
 	schedule(controllers.DeleteInactiveRoutine, time.Minute)
+	schedule(controllers.MoveAllRoutine, time.Millisecond*33)
 }

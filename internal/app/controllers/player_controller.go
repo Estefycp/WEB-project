@@ -46,6 +46,27 @@ func MovePlayer(player *models.Player, deltaX, deltaY float64) {
 	player.Y += deltaY
 }
 
+// LaunchPlayer by their velocity
+func LaunchPlayer(player *models.Player) {
+	player.X += player.Vx
+	if player.Vx > 1.0 {
+		player.Vx -= 1.0
+	} else if player.Vx < -1.0 {
+		player.Vx += 1.0
+	} else {
+		player.Vx = 0.0
+	}
+
+	player.Y += player.Vy
+	if player.Vy > 1.0 {
+		player.Vy -= 1.0
+	} else if player.Vy < -1.0 {
+		player.Vy += 1.0
+	} else {
+		player.Vy = 0.0
+	}
+}
+
 // UpdateRadius of the player by the given amount
 func UpdateRadius(player *models.Player, deltaR float64) {
 	player.Radius += deltaR
