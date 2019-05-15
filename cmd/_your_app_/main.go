@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/Estefycp/WEB-project/internal/app/routes"
 	"github.com/Estefycp/WEB-project/internal/app/routines"
@@ -42,5 +43,5 @@ func main() {
 		AllowedMethods: []string{"GET", "POST", "PUT"},
 	}).Handler(r)
 
-	http.ListenAndServe(":8081", handler)
+	http.ListenAndServe(":"+os.Getenv("PORT"), handler)
 }
