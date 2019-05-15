@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"time"
 
-	"../models"
+	"github.com/Estefycp/WEB-project/internal/app/models"
 	"github.com/go-redis/redis"
 )
 

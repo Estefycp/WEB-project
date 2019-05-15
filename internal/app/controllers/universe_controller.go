@@ -7,12 +7,12 @@ import (
 	"strconv"
 	"time"
 
-	"../models"
-	"../storage"
+	"github.com/Estefycp/WEB-project/internal/app/models"
+	"github.com/Estefycp/WEB-project/internal/app/storage"
 	"github.com/gorilla/mux"
 )
 
-var globalUniverse models.Universe = models.Universe{
+var globalUniverse = models.Universe{
 	NextID: 0,
 	Player: map[int64]*models.Player{},
 	Radius: 300.0,

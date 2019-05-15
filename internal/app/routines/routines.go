@@ -3,7 +3,7 @@ package routines
 import (
 	"time"
 
-	"../controllers"
+	"github.com/Estefycp/WEB-project/internal/app/controllers"
 )
 
 // schedule a task with a constant interval.
