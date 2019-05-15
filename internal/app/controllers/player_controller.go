@@ -22,15 +22,21 @@ func CreatePlayer(name string, skin int64, universe *models.Universe) models.Pla
 	initialScore = 100
 
 	return models.Player{
-		ID:       universe.NextID,
-		Name:     name,
-		Score:    initialScore,
-		Radius:   initialRadius,
-		X:        initalX,
-		Y:        initalY,
-		LastMove: time.Now(),
-		Born:     time.Now(),
-		Skin:     skin,
+		ID:          universe.NextID,
+		Name:        name,
+		Score:       initialScore,
+		Radius:      initialRadius,
+		X:           initalX,
+		Y:           initalY,
+		LastMove:    time.Now(),
+		Born:        time.Now(),
+		Skin:        skin,
+		Vx:          0,
+		Vy:          0,
+		RightCharge: 0,
+		LeftCharge:  0,
+		UpCharge:    0,
+		DownCharge:  0,
 	}
 }
 

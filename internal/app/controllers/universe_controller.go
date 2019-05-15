@@ -76,16 +76,16 @@ func UpdateUniverse(universe *models.Universe, id int64, up, down, left, right b
 	deltaX := 0.0
 	deltaY := 0.0
 	if up {
-		deltaY += 1.0
+		deltaY += 0.5
 	}
 	if down {
-		deltaY -= 1.0
+		deltaY -= 0.5
 	}
 	if right {
-		deltaX += 1.0
+		deltaX += 0.5
 	}
 	if left {
-		deltaX -= 1.0
+		deltaX -= 0.5
 	}
 	player := universe.Player[id]
 	centerDist := math.Sqrt(math.Pow(player.X+deltaX, 2.0) + math.Pow(player.Y+deltaY, 2.0))
